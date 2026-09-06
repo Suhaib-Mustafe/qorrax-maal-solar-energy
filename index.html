@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qorraxmaal Solar Energy Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <div class="login-header">
+                <h1><i class="fas fa-solar-panel"></i> Qorraxmaal Solar Energy</h1>
+                <p>Management System</p>
+            </div>
+            <div class="login-form">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Username" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" autocomplete="off">
+                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+                <div class="remember">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                </div>
+                <button id="loginBtn" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <div class="login-info">
+                    <p><strong>Default Credentials:</strong> suhaib / 1122</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main System -->
+    <div id="mainSystem" class="screen">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1><i class="fas fa-solar-panel"></i> Qorraxmaal Solar Energy</h1>
+                <div class="datetime">
+                    <span id="currentDate"></span>
+                    <span id="currentTime"></span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="logoutBtn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://ui-avatars.com/api/?name=Qorraxmaal&background=0D8ABC&color=fff" alt="Logo">
+                <h3>Dashboard Menu</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="menu-item active" data-target="dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#" class="menu-item" data-target="customer"><i class="fas fa-users"></i> Customers</a></li>
+                <li><a href="#" class="menu-item" data-target="employee"><i class="fas fa-user-tie"></i> Employees</a></li>
+                <li><a href="#" class="menu-item" data-target="products"><i class="fas fa-box-open"></i> Products</a></li>
+                <li><a href="#" class="menu-item" data-target="orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                <li><a href="#" class="menu-item" data-target="payment"><i class="fas fa-credit-card"></i> Payments</a></li>
+                <li><a href="#" class="menu-item" data-target="salaries"><i class="fas fa-money-check-alt"></i> Salaries</a></li>
+                <li><a href="#" class="menu-item" data-target="supplier"><i class="fas fa-truck"></i> Suppliers</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                    <p>System Overview & Statistics</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon customers">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="customerCount">0</h3>
+                            <p>Customers</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon employees">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="employeeCount">0</h3>
+                            <p>Employees</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon products">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="productCount">0</h3>
+                            <p>Products</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orders">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="orderCount">0</h3>
+                            <p>Orders</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon payments">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="paymentCount">0</h3>
+                            <p>Payments</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon salaries">
+                            <i class="fas fa-money-check-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="salaryCount">0</h3>
+                            <p>Salaries</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="dashboardChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Customer Management -->
+            <section id="customer" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Customer Management</h2>
+                    <p>Add, edit, delete and search customers</p>
+                </div>
+
+                <div class="form-container">
+                    <h3><i class="fas fa-user-plus"></i> Customer Information</h3>
+                    <form id="customerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerId"><i class="fas fa-id-card"></i> Customer ID</label>
+                                <input type="text" id="customerId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerName"><i class="fas fa-user"></i> Customer Name *</label>
+                                <input type="text" id="customerName" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customerPhone"><i class="fas fa-phone"></i> Phone *</label>
+                                <input type="text" id="customerPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerAddress"><i class="fas fa-map-marker-alt"></i> Address *</label>
+                                <input type="text" id="customerAddress" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="customerSave" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Customer
+                            </button>
+                            <button type="button" id="customerUpdate" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button type="button" id="customerDelete" class="btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="button" id="customerClear" class="btn-warning">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button type="button" id="customerReport" class="btn-info">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Customers</h3>
+                    <div class="search-form">
+                        <input type="text" id="searchCustomerName" placeholder="Search by name...">
+                        <input type="text" id="searchCustomerPhone" placeholder="Search by phone...">
+                        <button id="customerSearch" class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button id="customerRefresh" class="btn-refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fas fa-list"></i> Customer Records</h3>
+                    <table id="customerTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Employee Management -->
+            <section id="employee" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user-tie"></i> Employee Management</h2>
+                    <p>Manage employee records and details</p>
+                </div>
+
+                <div class="form-container">
+                    <h3><i class="fas fa-user-plus"></i> Employee Information</h3>
+                    <form id="employeeForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employeeId"><i class="fas fa-id-card"></i> Employee ID</label>
+                                <input type="text" id="employeeId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="employeeName"><i class="fas fa-user"></i> Employee Name *</label>
+                                <input type="text" id="employeeName" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employeeSalary"><i class="fas fa-money-bill-wave"></i> Basic Salary *</label>
+                                <input type="number" id="employeeSalary" required step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="employeeShift"><i class="fas fa-clock"></i> Shift *</label>
+                                <select id="employeeShift">
+                                    <option value="">Select Shift</option>
+                                    <option value="Morning">Morning</option>
+                                    <option value="Evening">Evening</option>
+                                    <option value="Night">Night</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="employeePhone"><i class="fas fa-phone"></i> Phone *</label>
+                                <input type="text" id="employeePhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="employeeAddress"><i class="fas fa-map-marker-alt"></i> Address *</label>
+                                <input type="text" id="employeeAddress" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="employeeSave" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Employee
+                            </button>
+                            <button type="button" id="employeeUpdate" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button type="button" id="employeeDelete" class="btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="button" id="employeeClear" class="btn-warning">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button type="button" id="employeeReport" class="btn-info">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Employees</h3>
+                    <div class="search-form">
+                        <input type="text" id="searchEmployeeName" placeholder="Search by name...">
+                        <input type="text" id="searchEmployeePhone" placeholder="Search by phone...">
+                        <button id="employeeSearch" class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button id="employeeRefresh" class="btn-refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fas fa-list"></i> Employee Records</h3>
+                    <table id="employeeTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Salary</th>
+                                <th>Shift</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Product Management -->
+            <section id="products" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-box-open"></i> Product Management</h2>
+                    <p>Manage inventory and product details</p>
+                </div>
+
+                <div class="form-container">
+                    <h3><i class="fas fa-box"></i> Product Information</h3>
+                    <form id="productForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productId"><i class="fas fa-barcode"></i> Product ID</label>
+                                <input type="text" id="productId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="productSupplierId"><i class="fas fa-truck"></i> Supplier ID *</label>
+                                <input type="text" id="productSupplierId" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productName"><i class="fas fa-box"></i> Product Name *</label>
+                                <input type="text" id="productName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="productPrice"><i class="fas fa-tag"></i> Price *</label>
+                                <input type="number" id="productPrice" required step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productQuantity"><i class="fas fa-cubes"></i> Quantity *</label>
+                                <input type="number" id="productQuantity" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="productSave" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Product
+                            </button>
+                            <button type="button" id="productUpdate" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button type="button" id="productDelete" class="btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="button" id="productClear" class="btn-warning">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button type="button" id="productReport" class="btn-info">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Products</h3>
+                    <div class="search-form">
+                        <input type="text" id="searchProductId" placeholder="Search by ID...">
+                        <input type="text" id="searchProductName" placeholder="Search by name...">
+                        <button id="productSearch" class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button id="productRefresh" class="btn-refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fas fa-list"></i> Product Inventory</h3>
+                    <table id="productTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Supplier ID</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Order Management -->
+            <section id="orders" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-shopping-cart"></i> Order Management</h2>
+                    <p>Create and manage customer orders</p>
+                </div>
+
+                <div class="form-container">
+                    <h3><i class="fas fa-cart-plus"></i> Order Information</h3>
+                    <form id="orderForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="orderId"><i class="fas fa-receipt"></i> Order ID</label>
+                                <input type="text" id="orderId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderDate"><i class="fas fa-calendar"></i> Order Date</label>
+                                <input type="date" id="orderDate">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="orderProductId"><i class="fas fa-barcode"></i> Product ID *</label>
+                                <input type="text" id="orderProductId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderProductName"><i class="fas fa-box"></i> Product Name</label>
+                                <input type="text" id="orderProductName" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="orderCustomerId"><i class="fas fa-user"></i> Customer ID *</label>
+                                <input type="text" id="orderCustomerId" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderCustomerName"><i class="fas fa-user"></i> Customer Name</label>
+                                <input type="text" id="orderCustomerName" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="orderQuantity"><i class="fas fa-cubes"></i> Quantity *</label>
+                                <input type="number" id="orderQuantity" required>
+                                <div class="stock-info">
+                                    <span>Available: <span id="availableStock">0</span></span>
+                                    <span>Remaining: <span id="remainingStock">0</span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="orderUnitPrice"><i class="fas fa-tag"></i> Unit Price *</label>
+                                <input type="number" id="orderUnitPrice" required step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="orderTotalAmount"><i class="fas fa-calculator"></i> Total Amount</label>
+                                <input type="number" id="orderTotalAmount" readonly step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="orderSave" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Order
+                            </button>
+                            <button type="button" id="orderUpdate" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button type="button" id="orderDelete" class="btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="button" id="orderClear" class="btn-warning">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button type="button" id="orderReport" class="btn-info">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Orders</h3>
+                    <div class="search-form">
+                        <input type="text" id="searchOrderId" placeholder="Search by Order ID...">
+                        <input type="text" id="searchOrderCustomerName" placeholder="Search by customer...">
+                        <button id="orderSearch" class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button id="orderRefresh" class="btn-refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fas fa-list"></i> Order Records</h3>
+                    <table id="orderTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Customer</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Payment Management -->
+            <section id="payment" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-credit-card"></i> Payment Management</h2>
+                    <p>Process and track payments</p>
+                </div>
+
+                <div class="form-container">
+                    <h3><i class="fas fa-money-check-alt"></i> Payment Information</h3>
+                    <form id="paymentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="paymentId"><i class="fas fa-receipt"></i> Payment ID</label>
+                                <input type="text" id="paymentId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="paymentOrderId"><i class="fas fa-shopping-cart"></i> Order ID *</label>
+                                <input type="text" id="paymentOrderId" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="paymentCustomerName"><i class="fas fa-user"></i> Customer Name</label>
+                                <input type="text" id="paymentCustomerName" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="paymentProductName"><i class="fas fa-box"></i> Product Name</label>
+                                <input type="text" id="paymentProductName" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="paymentTotal"><i class="fas fa-money-bill-wave"></i> Total Amount</label>
+                                <input type="number" id="paymentTotal" readonly step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="paymentDiscount"><i class="fas fa-percentage"></i> Discount</label>
+                                <input type="number" id="paymentDiscount" step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="paymentNetAmount"><i class="fas fa-calculator"></i> Net Amount</label>
+                                <input type="number" id="paymentNetAmount" readonly step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="paymentMethod"><i class="fas fa-credit-card"></i> Payment Method *</label>
+                                <select id="paymentMethod">
+                                    <option value="">Select Method</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="paymentDate"><i class="fas fa-calendar"></i> Payment Date</label>
+                                <input type="date" id="paymentDate">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="paymentSave" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Payment
+                            </button>
+                            <button type="button" id="paymentUpdate" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button type="button" id="paymentDelete" class="btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="button" id="paymentClear" class="btn-warning">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button type="button" id="paymentReport" class="btn-info">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Payments</h3>
+                    <div class="search-form">
+                        <input type="text" id="searchPaymentCustomerName" placeholder="Search by customer...">
+                        <button id="paymentSearch" class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button id="paymentRefresh" class="btn-refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fas fa-list"></i> Payment Records</h3>
+                    <table id="paymentTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Discount</th>
+                                <th>Net Amount</th>
+                                <th>Method</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Salary Management -->
+            <section id="salaries" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-money-check-alt"></i> Salary Management</h2>
+                    <p>Manage employee salaries and bonuses</p>
+                </div>
+
+                <div class="form-container">
+                    <h3><i class="fas fa-money-bill-wave"></i> Salary Information</h3>
+                    <form id="salaryForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="salaryId"><i class="fas fa-receipt"></i> Salary ID</label>
+                                <input type="text" id="salaryId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="salaryEmployeeId"><i class="fas fa-user-tie"></i> Employee ID *</label>
+                                <input type="text" id="salaryEmployeeId" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="salaryEmployeeName"><i class="fas fa-user"></i> Employee Name</label>
+                                <input type="text" id="salaryEmployeeName" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="salaryAmount"><i class="fas fa-money-bill-wave"></i> Salary Amount</label>
+                                <input type="number" id="salaryAmount" readonly step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="salaryBonus"><i class="fas fa-gift"></i> Bonus *</label>
+                                <input type="number" id="salaryBonus" required step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="salaryNet"><i class="fas fa-calculator"></i> Net Salary</label>
+                                <input type="number" id="salaryNet" readonly step="0.01">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="salaryDate"><i class="fas fa-calendar"></i> Salary Date</label>
+                                <input type="date" id="salaryDate">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="salarySave" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Salary
+                            </button>
+                            <button type="button" id="salaryUpdate" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button type="button" id="salaryDelete" class="btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="button" id="salaryClear" class="btn-warning">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button type="button" id="salaryReport" class="btn-info">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Salaries</h3>
+                    <div class="search-form">
+                        <input type="text" id="searchSalaryId" placeholder="Search by Salary ID...">
+                        <button id="salarySearch" class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button id="salaryRefresh" class="btn-refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fas fa-list"></i> Salary Records</h3>
+                    <table id="salaryTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee ID</th>
+                                <th>Employee Name</th>
+                                <th>Salary</th>
+                                <th>Bonus</th>
+                                <th>Net Salary</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Supplier Management -->
+            <section id="supplier" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-truck"></i> Supplier Management</h2>
+                    <p>Manage supplier information</p>
+                </div>
+
+                <div class="form-container">
+                    <h3><i class="fas fa-truck-loading"></i> Supplier Information</h3>
+                    <form id="supplierForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="supplierId"><i class="fas fa-id-card"></i> Supplier ID</label>
+                                <input type="text" id="supplierId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplierName"><i class="fas fa-user"></i> Supplier Name *</label>
+                                <input type="text" id="supplierName" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="supplierPhone"><i class="fas fa-phone"></i> Phone *</label>
+                                <input type="text" id="supplierPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="supplierAddress"><i class="fas fa-map-marker-alt"></i> Address *</label>
+                                <input type="text" id="supplierAddress" required>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" id="supplierSave" class="btn-primary">
+                                <i class="fas fa-save"></i> Save Supplier
+                            </button>
+                            <button type="button" id="supplierUpdate" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button type="button" id="supplierDelete" class="btn-danger">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button type="button" id="supplierClear" class="btn-warning">
+                                <i class="fas fa-broom"></i> Clear
+                            </button>
+                            <button type="button" id="supplierReport" class="btn-info">
+                                <i class="fas fa-file-pdf"></i> Generate Report
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="search-container">
+                    <h3><i class="fas fa-search"></i> Search Suppliers</h3>
+                    <div class="search-form">
+                        <input type="text" id="searchSupplierName" placeholder="Search by name...">
+                        <input type="text" id="searchSupplierPhone" placeholder="Search by phone...">
+                        <button id="supplierSearch" class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        <button id="supplierRefresh" class="btn-refresh">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <h3><i class="fas fa-list"></i> Supplier Records</h3>
+                    <table id="supplierTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Generate Report</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="report-options">
+                    <div class="report-option">
+                        <label><input type="radio" name="reportType" value="all" checked> All Records</label>
+                    </div>
+                    <div class="report-option">
+                        <label><input type="radio" name="reportType" value="id"> By ID</label>
+                        <input type="text" id="reportId" placeholder="Enter ID" disabled>
+                    </div>
+                    <div class="report-option">
+                        <label><input type="radio" name="reportType" value="date"> By Date Range</label>
+                        <div class="date-range">
+                            <input type="date" id="reportDateFrom" disabled>
+                            <span>to</span>
+                            <input type="date" id="reportDateTo" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-preview" id="reportPreview"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="generatePdf" class="btn-primary">
+                    <i class="fas fa-file-pdf"></i> Generate PDF
+                </button>
+                <button id="printReport" class="btn-secondary">
+                    <i class="fas fa-print"></i> Print Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
